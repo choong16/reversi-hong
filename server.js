@@ -1,5 +1,5 @@
 /*********************************/
-/* set up the static file server */
+/* Set up the static file server */
 let static = require('node-static');
 const { setUncaughtExceptionCaptureCallback } = require('process');
 
@@ -7,11 +7,11 @@ const { setUncaughtExceptionCaptureCallback } = require('process');
 let http = require('http');
 
 /* Assume that we are running on Heroku */
-Let port = process.env.PORT;
+let port = process.env.PORT;
 let directory = __dirname + '/public';
 
 /* If we aren't on Heroku, then we need to adjust our port and directory */
-if ((typeof port == 'undefined') || (port === null)) {
+if ((typeof port == 'undefined') || ( port === null)){
     port = 8080;
     directory = './public';
 }
