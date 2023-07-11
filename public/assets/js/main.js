@@ -17,3 +17,4 @@ if ((typeof username == 'undefined') || (username === null)){
 }
 
 $('#messages').prepend('<b>'+username+':</b>');
+
