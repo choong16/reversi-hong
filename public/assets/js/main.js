@@ -33,6 +33,15 @@ $( () => {
     socket.emit('join_room',request);
 }); 
 
+function sendChatMessage(){
+    let request = {};
+    request.username = username;
+    request.message = $('#chatMessage').val();
+    console.log( '**** Client log message, sending \'send_chat_message\' command: '+JSON.stringify(request));
+    socket.emit('send_chat_message', request);
+
+}
+
 $('#messages').prepend('<b>'+username+':</b>');
 
 
