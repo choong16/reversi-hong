@@ -24,7 +24,7 @@ socket.on('log', function(array) {
     console.log.apply(console,array);
 });
 
-socket.on('join_room_response', (paylaod) =>{
+socket.on('join_room_response', (payload) =>{
     if(( typeof payload == 'undefined') || (payload === null)) {
         console.log('Server did not send a payload');
         return;
