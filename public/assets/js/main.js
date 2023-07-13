@@ -10,6 +10,12 @@ function getIRIParameterValue(requestedKey){
     }
 }
 
+
+let username = decodeURI(getIRIParameterValue('username'));
+if ((typeof username == 'undefined') || (username === null)){
+    username = "Anonymous_"+Math.floor(Math.random()*1000);
+}
+
 let chatRoom = 'Lobby';
 
 /* Set up the socket.io connection to the server */
@@ -27,19 +33,9 @@ $( () => {
     socket.emit('join_room',request);
 }); 
 
-
-let username = decodeURI(getIRIParameterValue('username'));
-if ((typeof username == 'undefined') || (username === null)){
-    username = "Anonymous_"+Math.floor(Math.random()*1000);
-}
-
 $('#messages').prepend('<b>'+username+':</b>');
 
 
-let socket = io();
-socket.on('log',function(array) {
-    console.log.apply(console,array);
-});
 
 
 
