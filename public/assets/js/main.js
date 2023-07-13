@@ -21,7 +21,7 @@ let chatRoom = 'Lobby';
 /* Set up the socket.io connection to the server */
 let socket = io();
 socket.on('log', function(aray) {
-    console.log.apply(console,Array);
+    console.log.apply(console,array);
 });
 
 socket.on('join_room_response', (paylaod) =>{
