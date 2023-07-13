@@ -67,7 +67,7 @@ io.on('connection' , (socket) => {
         'result':'success',
         'room' : room that was joined,
         'username': the user that joined the room,
-        'coint': the number of users in the chat room
+        'count': the number of users in the chat room
     }
 or
     {
