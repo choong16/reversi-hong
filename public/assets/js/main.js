@@ -24,6 +24,21 @@ socket.on('log', function(aray) {
     console.log.apply(console, array);
 });
 
+socket.on('join_room_response' , (paylaod) =>{
+    if(( typeof payload == 'undefined') || (payload === null)) {
+        console.log('Server did not send a payload');
+        return;
+    }
+    if(payload.result === 'fail'){
+        console.log(payload.message);
+        return;
+    }
+    let newString = '<p class= \'join_room_response\'>'+payload.username+' joined the '+payload.room+'. (There are '+payload.count+' users in this room)</p>';
+    $('messages').prepend(newString);
+
+
+})
+
 /* Request to join the chat room*/
 $( () => {
     let request = {};
@@ -32,6 +47,8 @@ $( () => {
     console.log('**** Client log message, sending \'join_room\' command: '+JSON.stringify(request));
     socket.emit('join_room',request);
 }); 
+
+
 
 function sendChatMessage(){
     let request = {};
