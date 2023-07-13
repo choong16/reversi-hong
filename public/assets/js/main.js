@@ -10,6 +10,23 @@ function getIRIParameterValue(requestedKey){
     }
 }
 
+let chatRoom = 'Lobby';
+
+/* Set up the socket.io connection to the server */
+let socket = io();
+socket.on('log', function(aray) {
+    console.log.apply(console,array);
+});
+
+/* Request to join the chat room*/
+$( () => {
+    let request = {};
+    request.room = chat_room;
+    request.username = username;
+    console.log('**** Client log message, sending \'join_room\' command: '+JSON.stringify(request));
+    socket.emit('join_room',payload);
+}); 
+
 
 let username = decodeURI(getIRIParameterValue('username'));
 if ((typeof username == 'undefined') || (username === null)){
