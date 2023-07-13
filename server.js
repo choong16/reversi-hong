@@ -92,18 +92,16 @@ or
         if ((typeof room == 'undefined') || (payload === null)){
             response = {};
             response.result= 'fail';
-            response. message = 'client did not send a valid room to join';
+            response.message = 'client did not send a valid room to join';
             socket.emit('join_room_response' ,response);
             serverLog('join_room command failed', JSON.stringify(response));
-            return;
         }
         if ((typeof username == 'undefined') || (payload === null)){
             response = {};
             response.result= 'fail';
-            response. message = 'client did not send a payload';
+            response.message = 'client did not send a payload';
             socket.emit('join_room_response' ,response);
             serverLog('join_room command failed', JSON.stringify(response));
-            return;
         }
 
         /* Handle the command */
@@ -115,11 +113,10 @@ or
             /* Socket didn't join the room */
             if ((typeof sockets == 'undefine') || (sockets === null) || !sockets.includes(sockets)){
                 response = {};
-            response.result= 'fail';
-            response. message = 'Server internal error joining chat room';
-            socket.emit('join_room_response' ,response);
-            serverLog('join_room command failed', JSON.stringify(response));
-            return;
+                response.result= 'fail';
+                response.message = 'Server internal error joining chat room';
+                socket.emit('join_room_response' ,response);
+                serverLog('join_room command failed', JSON.stringify(response));
         }
         /*Socket did join room*/
         else{
