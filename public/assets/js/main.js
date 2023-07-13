@@ -20,7 +20,7 @@ let chatRoom = 'Lobby';
 
 /* Set up the socket.io connection to the server */
 let socket = io();
-socket.on('log', function(aray) {
+socket.on('log', function(array) {
     console.log.apply(console,array);
 });
 
