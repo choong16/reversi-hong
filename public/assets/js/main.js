@@ -21,10 +21,10 @@ socket.on('log', function(aray) {
 /* Request to join the chat room*/
 $( () => {
     let request = {};
-    request.room = chat_room;
+    request.room = chatRoom;
     request.username = username;
     console.log('**** Client log message, sending \'join_room\' command: '+JSON.stringify(request));
-    socket.emit('join_room',payload);
+    socket.emit('join_room',request);
 }); 
 
 
@@ -40,4 +40,6 @@ let socket = io();
 socket.on('log',function(array) {
     console.log.apply(console,array);
 });
+
+
 
