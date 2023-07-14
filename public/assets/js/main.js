@@ -8,8 +8,8 @@ function getIRIParameterValue(requestedKey){
             return IDBCursorWithValue;
         }
     }
+    return null;
 }
-
 
 let username = decodeURI(getIRIParameterValue('username'));
 if ((typeof username == 'undefined') || (username === null) || (username === 'null')) {
@@ -36,8 +36,12 @@ socket.on('join_room_response', (payload) =>{
         console.log(payload.message);
         return;
     }
-    let newString = '<p class= \'join_room_response\'>'+payload.username+' joined the '+payload.room+'. (There are '+payload.count+' users in this room)</p>';
+    let newHTML = '<p class= \'join_room_response\'>'+payload.username+' joined the '+payload.room+'. (There are '+payload.count+' users in this room)</p>';
+    let newNode = $(newHTML);
+    newNode.hide();
+
     $('#messages').prepend(newString);
+    newNode.show("fade", 500);
 })
 
 function sendChatMessage(){
@@ -47,9 +51,10 @@ function sendChatMessage(){
     request.message = $('#chatMessage').val();
     console.log( '**** Client log message, sending \'send_chat_message\'command: '+JSON.stringify(request));
     socket.emit('send_chat_message', request);
+    $('#chatMessage').val('');
 }
 
-socket.on('send_chat_message_response', (payload) =>{
+socket.on('send_chat_message_response', (payload) => {
     if(( typeof payload == 'undefined') || (payload === null)) {
         console.log('Server did not send a payload');
         return;
@@ -58,10 +63,11 @@ socket.on('send_chat_message_response', (payload) =>{
         console.log(payload.message);
         return;
     }
-    let newHTML = '<p class=\'chat_message\'><b>' + payload.username + '</b>:' + payload.message+'</p>';
-   let newNode = $(newHTML);
+    let newHTML = '<p class=\'chat_message\'><b>' + payload.username + '</b>:' + payload.message+ '</p>';
+    let newNode = $(newHTML);
    newNode.hide();
-    $('#messages').prepend(newString);
+    $('#messages').prepend(newNode);
+    newNode.show("fade", 500);
 })
 
 /* Request to join the chat room*/
