@@ -36,7 +36,7 @@ console.log('The server is running');
 /* Set up the web socket server */
 
 /* Set up a registry of player information and their socket io */
-let players = ();
+let players = [];
 
 const { Server } = require("socket.io");
 const io = new Server(app);
@@ -124,15 +124,23 @@ or
         }
         /*Socket did join room*/
         else{
-            response = {};
-            response.result = 'success';
-            response.room = room;
-            response.username = username;
-            response.count = sockets.length;
-
-            /*Tell everyone that a new user has joined the chat room */
-            io.of('/').to(room).emit('join_room_response',response);
-            serverLog('join_room succeeded', JSON.stringify(response));
+            players(socket.id) = {
+                username: username,
+                room: room
+            }
+            /*Announce to everyone that is in the room, who else is in the room*/
+            for (const member in sockets){
+                response = {
+                    result: 'success',
+                    socket_id: member.id,
+                    room: players[member.id].room,
+                    username: players[member.id].username,
+                    count: sockets.length
+                }
+                /*Tell everyone that a new user has joined the chat room */
+                io.of('/').to(room).emit('join_room_response',response);
+                serverLog('join_room succeeded', JSON.stringify(response));
+            }
         }
     });
 });
