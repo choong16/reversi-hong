@@ -71,6 +71,7 @@ io.on('connection' , (socket) => {
         'room' : room that was joined,
         'username': the user that joined the room,
         'count': the number of users in the chat room
+        'socket_id': the socket of the user that just joined the room
     }
 or
     {
@@ -124,7 +125,7 @@ or
         }
         /*Socket did join room*/
         else{
-            players(socket.id) = {
+            players[socket.id] = {
                 username: username,
                 room: room
             }
@@ -145,6 +146,12 @@ or
     });
 });
 
+
+    socket.on('disconnect', () => {
+        serverLog('a page disconnected from the server:' + socket.id);
+
+
+});
 
 
 /* send_chat_message command handler */
