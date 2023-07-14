@@ -12,11 +12,14 @@ function getIRIParameterValue(requestedKey){
 
 
 let username = decodeURI(getIRIParameterValue('username'));
-if ((typeof username == 'undefined') || (username === null)){
+if ((typeof username == 'undefined') || (username === null) || (username === 'null')) {
     username = "Anonymous_"+Math.floor(Math.random()*1000);
 }
 
-let chatRoom = 'Lobby';
+let chatRoom = decodeURI(getIRIParameterValue('game_id'));
+if ((typeof chatRoom == 'undefined') || (chatRoom === null) || (chatRoom === 'null')) {
+    chatRoom = "Lobby";
+}
 
 /* Set up the socket.io connection to the server */
 let socket = io();
@@ -55,7 +58,9 @@ socket.on('send_chat_message_response', (payload) =>{
         console.log(payload.message);
         return;
     }
-    let newString = '<p class=\'chat_message\'><b>'+payload.username+'</b>:'+payload.message+'</p>';
+    let newHTML = '<p class=\'chat_message\'><b>' + payload.username + '</b>:' + payload.message+'</p>';
+   let newNode = $(newHTML);
+   newNode.hide();
     $('#messages').prepend(newString);
 })
 
@@ -66,6 +71,8 @@ $( () => {
     request.username = username;
     console.log('**** Client log message, sending \'join_room\' command: '+JSON.stringify(request));
     socket.emit('join_room',request);
+
+    $("#lobbyTitle").html(username + "'s Lobby"); 
 
     $('#chatMessage').keypress(function (e) {
         let key  = e.which;
