@@ -20,7 +20,7 @@ let chatRoom = 'Lobby';
 
 /* Set up the socket.io connection to the server */
 let socket = io();
-socket.on('log', function(array) {
+socket.on('log',function(array) {
     console.log.apply(console,array);
 });
 
@@ -58,8 +58,6 @@ socket.on('send_chat_message_response', (payload) =>{
     let newString = '<p class=\'chat_message\'><b>'+payload.username+'</b>:'+payload.message+'</p>';
     $('#messages').prepend(newString);
 })
-
-$('#messages').prepend('<b>'+username+':</b>');
 
 /* Request to join the chat room*/
 $( () => {
