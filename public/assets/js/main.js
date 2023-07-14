@@ -34,10 +34,20 @@ socket.on('join_room_response', (payload) =>{
         return;
     }
     let newString = '<p class= \'join_room_response\'>'+payload.username+' joined the '+payload.room+'. (There are '+payload.count+' users in this room)</p>';
-    $('messages').prepend(newString);
-
-
+    $('#messages').prepend(newString);
 })
+
+function sendChatMessage(){
+    let request = {};
+    request.room = chatRoom;
+    request.username = username;
+    request.message = $('#chatMessage').val();
+    console.log( '**** Client log message, sending \'send_chat_message\' command: '+JSON.stringify(request));
+    socket.emit('send_chat_message', request);
+
+}
+
+$('#messages').prepend('<b>'+username+':</b>');
 
 /* Request to join the chat room*/
 $( () => {
@@ -47,19 +57,6 @@ $( () => {
     console.log('**** Client log message, sending \'join_room\' command: '+JSON.stringify(request));
     socket.emit('join_room',request);
 }); 
-
-
-
-function sendChatMessage(){
-    let request = {};
-    request.username = username;
-    request.message = $('#chatMessage').val();
-    console.log( '**** Client log message, sending \'send_chat_message\' command: '+JSON.stringify(request));
-    socket.emit('send_chat_message', request);
-
-}
-
-$('#messages').prepend('<b>'+username+':</b>');
 
 
 
