@@ -35,6 +35,9 @@ console.log('The server is running');
 /*********************************/
 /* Set up the web socket server */
 
+/* Set up a registry of player information and their socket io */
+let players = ();
+
 const { Server } = require("socket.io");
 const io = new Server(app);
 
@@ -110,8 +113,7 @@ or
         socket.join(room);
 
         /* Make sure the client was put in the room*/
-        io.in(room).fetchSockets().then((sockets)=>{
-            serverLog('There are '+sockets.lengths+' clients in the room, '+room);
+        io.in(room).fetchSockets().then((sockets)=> {
             /* Socket didn't join the room */
             if ((typeof sockets == 'undefine') || (sockets === null) || !sockets.includes(sockets)){
                 response = {};
