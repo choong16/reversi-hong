@@ -149,9 +149,20 @@ or
 
     socket.on('disconnect', () => {
         serverLog('a page disconnected from the server:' + socket.id);
-
-
-});
+        if((typeof player[socket.id] !='undefined') && (players[socket.id] != null)){
+            let payload = {
+                username: players[socket.id].username,
+                room: player[socket.id].room,
+                count: Object.keys(players).length - 1,
+                socket_id: socket.id
+            };
+            let room = player[socket.id].room,
+            delete players[socket.id];
+            /* Tell everyone who left the room*/
+            io.of("/").to(room).emit('player_disconnected',payload);
+            serverLog('player_disconnected succeeded', JSON.stringify(payload));
+        }
+    });
 
 
 /* send_chat_message command handler */
