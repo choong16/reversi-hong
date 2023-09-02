@@ -157,7 +157,7 @@ or
                 socket_id: socket.id
             };
             let room = player[socket.id].room,
-            delete players[socket.id];
+            
             /* Tell everyone who left the room*/
             io.of("/").to(room).emit('player_disconnected',payload);
             serverLog('player_disconnected succeeded', JSON.stringify(payload));
