@@ -164,7 +164,7 @@ or
         }
     });
 
-
+ 
 /* send_chat_message command handler */
 /* expected payload:
     {
